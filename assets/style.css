@@ -1,0 +1,33 @@
+:root {
+    --light: #08a2e9;
+    --dark: #0400f3;
+    --backgroundLight: #b2daff;
+}
+
+* {
+    margin: 0
+}
+
+header {
+    background: linear-gradient(to left, var(--light), var(--dark));
+    color: #fff;
+    padding: 20px;
+    border-bottom: solid black 5px;
+}
+
+h1 {
+    font-size: 250%;
+    padding-left: 30px;
+}
+
+main {
+    padding: 30px 20px;
+}
+
+body {
+    background-color: var(--backgroundLight);
+}
+
+button {
+    width: 100%;
+}
