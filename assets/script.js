@@ -3,6 +3,7 @@ function searchWeather() {
     var city = document.getElementById("searchInput").value;
     var geocodingURL = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`;
 
+    // Fetch for the geocoding. Takes the entered City and finds the latitude and longitude
     fetch(geocodingURL)
         .then((response) => response.json())
         .then((data) => {
@@ -12,12 +13,15 @@ function searchWeather() {
             var currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`;
             var forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`;
 
+            // Stores the searched city to local storage
             var cityList = JSON.parse(localStorage.getItem("cityList")) || [];
             if (!cityList.includes(city)) {
                 cityList.unshift(city);
                 localStorage.setItem("cityList", JSON.stringify(cityList));
             }
 
+            // This fetches the API URL for the current weather. Makes variables for the current date and weather icon. 
+            // It then prints to the HTML the City/Date, Icon, Temp, Wind, Humidity
             fetch(currentWeatherURL)
                 .then((response) => response.json())
                 .then((data) => {
@@ -32,11 +36,16 @@ function searchWeather() {
                     currentWeather.innerHTML += `Wind: ${data.wind.speed} MPH <br>`;
                     currentWeather.innerHTML += `Humidity: ${data.main.humidity}% <br>`;
 
+                    // This function is then called to populate the search history
                     populateSearchHistory();
                 })
                 .catch((error) => {
                     console.error("Error fetching current weather data:", error);
             })  
+
+            // Fetches API URL for the 5 day forecast. 
+            // Since the API gives you one list item every 3 hours for 5 days, 
+            // the dailyData variable takes just one of those items per day. 
             fetch(forecastURL)
                 .then((response) => response.json())
                 .then((data) => {
@@ -46,6 +55,7 @@ function searchWeather() {
 
                     var dailyData = data.list.filter((reading, index) => index % 8 === 4);
 
+                    // This creates a div and puts them in a row, and add's the card look to each of the 5 days
                     var forecastRow = document.createElement("div");
                     forecastRow.classList.add("row");
 
@@ -78,6 +88,8 @@ function searchWeather() {
 
 }
 
+// Once there is search history, this creates the h4 and then puts the search in a clickable button
+// If the button is clicked then it runs the next function
 function populateSearchHistory() {
     var searchHistory = document.getElementById("searchHistory");
     searchHistory.innerHTML = "<h4>Search History:</h4>";
@@ -94,6 +106,7 @@ function populateSearchHistory() {
     });
 }
 
+// This function runs whenever the search history button is clicked, populating the searchInput and running the searchWeather function
 function searchWeatherByCity(city) {
     document.getElementById("searchInput").value = city;
     searchWeather();
