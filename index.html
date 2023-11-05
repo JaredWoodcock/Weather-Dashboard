@@ -20,18 +20,24 @@
     <main>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-3 align-itrms-center">
+                <div class="col-3">
                     <form>
                       <div class="mb-3">
                         <label for="searchInput" class="form-label">Search for a city:</label>
                         <input type="text" class="form-control" id="searchInput" placeholder="Enter city name">
                       </div>
                       <button type="button" onclick="searchWeather()" class="btn btn-primary">Search</button>
+                      <div></div>
                     </form>
                   </div>
-              <div class="col-9 align-itrms-center border border-3 border-dark">
-                <h2>Content Area</h2>
-                <p>Some content goes here...</p>
+              <div class="col-9 border border-3 border-dark">
+                <div id="currentWeather"></div>
+              </div>
+              <div class="col-3">
+                <div id="searchHistory"></div>
+              </div>
+              <div class="col-9">
+                <p id="forecast"></p>
               </div>
             </div>
           </div>
@@ -41,7 +47,7 @@
 
 
 
-    
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.6/dayjs.min.js"></script>
     <script src="./assets/script.js"></script>
 </body>
 </html>
